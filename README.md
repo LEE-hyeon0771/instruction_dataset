@@ -13,8 +13,8 @@ instruction, input, output으로 명확하게 column들이 주어져 있는 형�
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/7ddc7c9d-151a-4f8e-8000-47f536965fe1)
 
 ```
-# instruction, input, output과 같은 column으로 이미 셋팅된 data
-if len(df.columns) >= 3:
+# 1. instruction, input, output과 같은 column으로 이미 셋팅된 data
+if len(df.columns) >= 3 and len(args.args) >= 3:
     df = df[args.args]
     df.columns = ['instruction', 'output', 'input']
 ```
@@ -40,7 +40,11 @@ instruction, input, output으로 명확하게 column들이 주어져 있지 않�
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/20f3f602-5866-493f-a090-5652ceb48a63)
 
 ```
-target_column, first_delimiter, second_delimiter = args.args[0], args.args[1], args.args[2]
+instructions = []
+outputs = []
+
+else:
+    target_column, first_delimiter, second_delimiter = args.args
 
     instructions = []
     outputs = []
@@ -80,7 +84,7 @@ human의 내용은 instruction, gpt의 내용은 output, input은 결측값을 �
 
 # 2) key-value 쌍이 없고, 단순히 구분자로 구분되어야 하는 경우 (ex) ### Human ~~~ ### Assistant)
         elif isinstance(conversation, str):
-            split_text = re.split(re.escape(first_delimiter) + '|' + re.escape(second_delimiter), conversation)
+            split_text = re.split(re.escape(args.first_delimiter) + '|' + re.escape(args.second_delimiter), conversation)
             if len(split_text) >= 3:
                 human_msg = split_text[1].strip()
                 gpt_msg = split_text[2].strip()
@@ -98,6 +102,14 @@ python [python 파일명] "input파일주소" [target column명] [첫번째 구�
 ### Human의 내용은 instruction, ### Assistant의 내용은 output, input은 결측값을 입력한다.
 ```
 
+```
+예외 경우
+1) json 파일이지만, jsonl 파일 형태로 작성되어있는 데이터 : json 파일을 읽어들일 때, lines=True를 기록해주어야 위 코드를 통해 데이터 가공이 가능
+2) "from" : "gpt", "from" : "bot"의 형태가 아닌, from 자리에 다른 문구가 속하는 경우 : from의 위치에 다른 문구를 기록해주어야 위 코드를 통해 데이터 가공이 가능
+3) 형식이 gpt, bot의 형태가 아닌 3~4개의 구분자가 나오게 되는 경우 : 코드를 변형시켜서, 해당 경우에 맞는 코드를 짜주는 것이 훨씬 효율적
+
+일반적으로 흔히 instruction dataset이 가지고 있는 형태를 코드로 쉽게 처리하기 위한 작업이므로, 예외의 경우에는 따로 추가적인 코드 수정처리가 필요하다.
+```
 
 ## 데이터 통합
 
@@ -125,13 +137,23 @@ if dataframes:
     combined_df = pd.concat(dataframes, ignore_index=True)
 
     output_file_path = 'C:/Users/DEEPNOID/Desktop/1_format/real_file/Final_combine.json'
-    combined_df.to_json(output_file_path, orient='records', force_ascii=False)
+    combined_df.to_json(output_file_path, orient='records', force_ascii=False, lines=True)
     print(f"Combined data saved to {output_file_path}")
 else:
     print("No dataframes to combine.")
+
+# combined_df.to_json(output_file_path, orient='records', force_ascii=False, lines=True)
+lines=True를 기록해주지 않을 경우, vscode 실행 시 모두 한 줄에 기록되어 읽기 힘든 파일 형태가 될 수 있다.
+jsonl 파일 형식을 가진 json 파일로 뽑아내는 방식이다.
+lines=True를 생략하고, json의 올바른 파일 형식으로 뽑아낼 수도 있다.
 ```
 
 데이터를 통합시키기 위해 pandas의 concat 함수를 사용하고, json_file_paths 리스트에 위와 같은 방식으로 변경시킨 모든 json 파일들을 리스트로 담아주면, 한 번에 데이터를 통합시킬 수 있다.
+
+
+## 데이터 Tokenizing
+- instruction dataset을 통합해서 모두 구축했다면, 이제 데이터를 tokenizer를 이용해서 몇 개의 토큰으로 나누어지고 있는지를 살펴보자.
+- 
 
 
 
