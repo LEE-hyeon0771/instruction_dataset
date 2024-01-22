@@ -153,7 +153,52 @@ lines=True를 생략하고, json의 올바른 파일 형식으로 뽑아낼 수�
 
 ## 데이터 Tokenizing
 - instruction dataset을 통합해서 모두 구축했다면, 이제 데이터를 tokenizer를 이용해서 몇 개의 토큰으로 나누어지고 있는지를 살펴보자.
-- 
+
+```
+import json
+import nltk
+from nltk.tokenize import word_tokenize
+
+nltk.download("punkt")
+
+def tokenize_text(text):
+    # 토큰 길이 return
+
+def process_file(file_path):
+    
+    total_instruction_tokens = 0
+    total_output_tokens = 0
+    total_input_tokens = 0
+    total_tokens = 0
+
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            i = json.loads(line)
+        
+            instruction_tokens = tokenize_text(i['instruction'])
+            output_tokens = tokenize_text(i['output'])
+            input_tokens = tokenize_text(i['input'])
+            
+            total_instruction_tokens += instruction_tokens
+            total_output_tokens += output_tokens
+            total_input_tokens += input_tokens
+            
+            print(f"Instruction Tokens: {instruction_tokens}, Output Tokens: {output_tokens}, Input Tokens: {input_tokens}")
+    total_tokens = total_instruction_tokens + total_output_tokens + total_input_tokens
+    print(f"Total Instruction Tokens: {total_instruction_tokens}, Total Output Tokens: {total_output_tokens}, Total Input Tokens: {total_input_tokens}, Total Tokens: {total_tokens}")
+
+json_file_path = 'C:/Users/DEEPNOID/Desktop/instruction, output, input type/preprocessing file/Final_combine.json'
+process_file(json_file_path)
+
+word_tokenize를 사용하여 tokenize를 단어를 기준으로 잘라주는 방식을 선택했다. 
+```
+
+![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/9a59bef3-e06e-46ea-b815-54c9f8d9f9f8)
+
+```
+수집했던 데이터셋 중에서 코드를 활용해서 쉽게 데이터를 처리할 수 있는 json 파일은 1.61GB 정도였다. 
+tokenize를 nlpk의 word_tokenize를 사용하여 코드로 구현해서 뽑은 결과는 위와 같다.
+```
 
 
 
