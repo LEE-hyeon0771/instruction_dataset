@@ -20,18 +20,17 @@ elif file_type == 'parquet':
 else:
     raise ValueError("파일 형식이 올바르지 않습니다.")
 
+instructions = []
+outputs = []
 # 1. instruction, input, output과 같은 column으로 이미 셋팅된 data
-if len(df.columns) >= 3:
+if len(df.columns) >= 3 and len(args.args) >= 3:
     df = df[args.args]
     df.columns = ['instruction', 'output', 'input']
 
 # 2. 한 column 내에 구분자로 구분되어야 하는 경우
 else:
-    target_column, first_delimiter, second_delimiter = args.args[0], args.args[1], args.args[2]
+    target_column, first_delimiter, second_delimiter = args.args
 
-    instructions = []
-    outputs = []
-    
     for _, row in df.iterrows():
         conversation = row[target_column]
         human_msg = np.nan
@@ -47,7 +46,7 @@ else:
         
         # 2) key-value 쌍이 없고, 단순히 구분자로 구분되어야 하는 경우 (ex) ### Human ~~~ ### Assistant)
         elif isinstance(conversation, str):
-            split_text = re.split(re.escape(first_delimiter) + '|' + re.escape(second_delimiter), conversation)
+            split_text = re.split(re.escape(args.first_delimiter) + '|' + re.escape(args.second_delimiter), conversation)
             if len(split_text) >= 3:
                 human_msg = split_text[1].strip()
                 gpt_msg = split_text[2].strip()
