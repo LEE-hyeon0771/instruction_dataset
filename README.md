@@ -1,12 +1,12 @@
 ## instruction_dataset 가공하기
 
-### 대상 데이터셋
+## 대상 데이터셋
 대상 데이터셋 : 한글 instruction dataset
 
-### 목적
+## 목적
 목적 : 여러가지 데이터셋 형식에서 사용하기 쉬운 instruction dataset을 일정 포맷(instruction, output, input)으로 변경하는 튜토리얼
 
-### 변경 타입 1)
+## Step1 - 변경 타입 1)
 instruction, input, output으로 명확하게 column들이 주어져 있는 형식 : 이 형식의 경우 데이터의 column이 3개 이상이고 instruction, input, output의 형태가 아니더라도 유사한 column명이 주어지게 된다.
 
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/7ddc7c9d-151a-4f8e-8000-47f536965fe1)
@@ -24,15 +24,15 @@ if len(df.columns) >= 3:
 
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/b5df0100-c714-4a7a-8ce8-83cca27d63db)
 ```
-python "input파일주소" [첫번째 column명] [두번째 column명] [세번째 column명] "output파일주소" 
+python [python 파일명] "input파일주소" [첫번째 column명] [두번째 column명] [세번째 column명] "output파일주소" 
 
 이렇게 기록하게 되면 모든 내용들이 instruction, output, input의 순서로 정렬된 데이터프레임 형태의 json 파일로 변경 되게 된다.
 ```
 
-### 변경 타입 2)
+## Step2 - 변경 타입 2)
 instruction, input, output으로 명확하게 column들이 주어져 있지 않는 방식
 
-1. key-value 쌍이 이미 존재하는 경우(from, value) -> (ex) 'from' : 'human', 'from' : 'gpt')
+### 1. key-value 쌍이 이미 존재하는 경우(from, value) -> (ex) 'from' : 'human', 'from' : 'gpt')
 
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/20f3f602-5866-493f-a090-5652ceb48a63)
 
@@ -62,17 +62,18 @@ target_column, first_delimiter, second_delimiter = args.args[0], args.args[1], a
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/ad427e9a-8db1-4285-9cc5-b7c70be721bb)
 
 ```
-python "input파일주소" [target column명] [첫번째 구분자 human] [두번째 구분자 gpt] "output파일주소"
+python [python 파일명] "input파일주소" [target column명] [첫번째 구분자 human] [두번째 구분자 gpt] "output파일주소"
 
 이렇게 기록하게 되면 모든 내용들이 instruction, output, input의 순서로 정렬된 데이터프레임 형태의 json 파일로 변경 되게 된다.
 human의 내용은 instruction, gpt의 내용은 output, input은 결측값을 입력한다.
 ```
 
-2. key-value 쌍이 없고, 단순히 구분자로 구분되어야 하는 경우 (ex) ### Human ~~~ ### Assistant)
+### 2. key-value 쌍이 없고, 단순히 구분자로 구분되어야 하는 경우 (ex) ### Human ~~~ ### Assistant)
 
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/a0e43926-55dd-4f40-8cae-be2db032a19d)
 
 ```
+
 # 2) key-value 쌍이 없고, 단순히 구분자로 구분되어야 하는 경우 (ex) ### Human ~~~ ### Assistant)
         elif isinstance(conversation, str):
             split_text = re.split(re.escape(first_delimiter) + '|' + re.escape(second_delimiter), conversation)
@@ -87,7 +88,7 @@ human의 내용은 instruction, gpt의 내용은 output, input은 결측값을 �
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/9288a716-fd2a-4d82-89b4-c52cf999a0e6)
 
 ```
-python "input파일주소" [target column명] [첫번째 구분자 ### Human] [두번째 구분자 ### Assistant] "output파일주소"
+python [python 파일명] "input파일주소" [target column명] [첫번째 구분자 ### Human] [두번째 구분자 ### Assistant] "output파일주소"
 
 이렇게 기록하게 되면 모든 내용들이 instruction, output, input의 순서로 정렬된 데이터프레임 형태의 json 파일로 변경 되게 된다.
 ### Human의 내용은 instruction, ### Assistant의 내용은 output, input은 결측값을 입력한다.
