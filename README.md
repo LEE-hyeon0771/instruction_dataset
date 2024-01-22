@@ -6,6 +6,7 @@
 ## 목적
 목적 : 여러가지 데이터셋 형식에서 사용하기 쉬운 instruction dataset을 일정 포맷(instruction, output, input)으로 변경하는 튜토리얼
 
+
 ## Step1 - 변경 타입 1)
 instruction, input, output으로 명확하게 column들이 주어져 있는 형식 : 이 형식의 경우 데이터의 column이 3개 이상이고 instruction, input, output의 형태가 아니더라도 유사한 column명이 주어지게 된다.
 
@@ -29,8 +30,10 @@ python [python 파일명] "input파일주소" [첫번째 column명] [두번째 c
 이렇게 기록하게 되면 모든 내용들이 instruction, output, input의 순서로 정렬된 데이터프레임 형태의 json 파일로 변경 되게 된다.
 ```
 
+
 ## Step2 - 변경 타입 2)
 instruction, input, output으로 명확하게 column들이 주어져 있지 않는 방식
+
 
 ### 1. key-value 쌍이 이미 존재하는 경우(from, value) -> (ex) 'from' : 'human', 'from' : 'gpt')
 
@@ -68,6 +71,7 @@ python [python 파일명] "input파일주소" [target column명] [첫번째 구�
 human의 내용은 instruction, gpt의 내용은 output, input은 결측값을 입력한다.
 ```
 
+
 ### 2. key-value 쌍이 없고, 단순히 구분자로 구분되어야 하는 경우 (ex) ### Human ~~~ ### Assistant)
 
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/a0e43926-55dd-4f40-8cae-be2db032a19d)
@@ -94,7 +98,8 @@ python [python 파일명] "input파일주소" [target column명] [첫번째 구�
 ### Human의 내용은 instruction, ### Assistant의 내용은 output, input은 결측값을 입력한다.
 ```
 
-### 데이터 통합
+
+## 데이터 통합
 
 - 수 많은 데이터들을 위와 같은 방식으로 instruction, output, input 포맷으로 변경했다면 이제 데이터를 하나로 통합시켜야한다.
 
