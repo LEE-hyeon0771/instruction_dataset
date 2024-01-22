@@ -190,14 +190,14 @@ def process_file(file_path):
 json_file_path = 'C:/Users/DEEPNOID/Desktop/instruction, output, input type/preprocessing file/Final_combine.json'
 process_file(json_file_path)
 
-word_tokenize를 사용하여 tokenize를 단어를 기준으로 잘라주는 방식을 선택했다. 
+nltk의 word_tokenize를 사용하여 tokenize를 단어를 기준으로 잘라주는 방식을 선택했다. 
 ```
 
 ![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/9a59bef3-e06e-46ea-b815-54c9f8d9f9f8)
 
 ```
 수집했던 데이터셋 중에서 코드를 활용해서 쉽게 데이터를 처리할 수 있는 json 파일은 1.61GB 정도였다. 
-tokenize를 nlpk의 word_tokenize를 사용하여 코드로 구현해서 뽑은 결과는 위와 같다.
+tokenize를 nltk의 word_tokenize를 사용하여 코드로 구현해서 뽑은 결과는 위와 같다.
 ```
 
 
