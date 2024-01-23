@@ -1,14 +1,13 @@
 import json
-import nltk
-from nltk.tokenize import word_tokenize
+from transformers import AutoTokenizer
 
-nltk.download("punkt")
+MODEL = "42dot/42dot_LLM-SFT-1.3B"
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
 
 def tokenize_text(text):
     if text is None:
         return 0
-    tokens = word_tokenize(text)
-    return len(tokens)
+    return len(tokenizer.tokenize(text))
 
 def process_file(file_path):
     
