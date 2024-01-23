@@ -6,6 +6,47 @@
 ## 목적
 목적 : 여러가지 데이터셋 형식에서 사용하기 쉬운 instruction dataset을 일정 포맷(instruction, output, input)으로 변경하는 튜토리얼
 
+## 사용 dataSet
+
+### Data Type 1
+
+| 번호 | 이름 | 데이터 방식 |
+|---|---|---|
+| 1 | [legal_instruction](https://huggingface.co/datasets/yejeekang/legal_instruction_token-1200) | instruction, input, output |
+| 2 | [AISquare_Koalpaca](https://huggingface.co/datasets/inswave/AISquare_Koalpaca_Orca_merged) | instruction, input, output |
+| 3 | [kullm-v2](https://huggingface.co/datasets/nlpai-lab/kullm-v2) | instruction, input, output |
+| 4 | [namuwiki](https://huggingface.co/datasets/psymon/namuwiki_alpaca_dataset) | instruction, input, output |
+| 5 | [sentiment_koalpaca](https://huggingface.co/datasets/bbokyeong/sentiment_koalpaca/viewer/default/train?p=1) | instruction, input, output |
+| 6 | [koalpaca](https://huggingface.co/datasets/royboy0416/ko-alpaca) | instruction, input, output |
+| 7 | [koalpaca-v1.1a](https://huggingface.co/datasets/beomi/KoAlpaca-v1.1a) | instruction, input, output |
+| 8 | [koInstruct-Base](https://huggingface.co/datasets/GSON-backup/KoInstruct-Base) | instruction, input, output |
+| 9 | [koInstruct-QA](https://huggingface.co/datasets/GSON-backup/KoInstruct-QA) | instruction, input, output |
+| 10 | [instructions-ko](https://huggingface.co/datasets/causal-lm/instructions-ko) | instruction, input, output |
+| 11 | [ko_legal_instruction](https://huggingface.co/datasets/yejeekang/ko_legal_instruction) | instruction, input, output |
+| 12 | [KOpen-platypus](https://huggingface.co/datasets/kyujinpy/KOpen-platypus) | instruction, input, output |
+| 13 | [EverythingLM-data](https://huggingface.co/datasets/ziozzang/EverythingLM-data-V2-Ko?row=0) | instruction, input, output |
+| 14 | [OpenOrca-KO](https://huggingface.co/datasets/kyujinpy/OpenOrca-KO) | instruction, input, output |
+| 15 | [korean_rlhf_dataset](https://huggingface.co/datasets/jojo0217/korean_rlhf_dataset) | instruction, input, output |
+| 16 | [WIKI_QA_Near_dedup](https://huggingface.co/datasets/HumanF-MarkrAI/WIKI_QA_Near_dedup) | instruction, input, output |
+
+
+### Data Type 2
+
+| 번호 | 이름 | 데이터 방식 |
+|---|---|---|
+| 1 | [ko-lima-vicuna](https://huggingface.co/datasets/changpt/ko-lima-vicuna) | key-value |
+| 2 | [aulm-0809](https://huggingface.co/datasets/heegyu/aulm-0809) | key-value |
+| 3 | [alpaca-gpt4-korean](https://huggingface.co/datasets/FreedomIntelligence/alpaca-gpt4-korean) | key-value |
+| 4 | [ShareGPT-74k-ko](https://huggingface.co/datasets/dbdu/ShareGPT-74k-ko) | key-value |
+| 5 | [openassistant-guanco-ko](https://huggingface.co/datasets/nlpai-lab/openassistant-guanaco-ko) | 구분자 구분 |
+| 6 | [instruction_data](https://huggingface.co/datasets/fiveflow/instruction_data) | 구분자 구분 |
+| 7 | [open-korean-instructions](https://huggingface.co/datasets/heegyu/open-korean-instructions) | 구분자 구분 |
+| 8 | [evol-instruct-korean](https://huggingface.co/datasets/FreedomIntelligence/evol-instruct-korean) | key-value |
+| 9 | [open-korean-instructions-v20231020](https://huggingface.co/datasets/heegyu/open-korean-instructions-v20231020) | key-value |
+| 10 | [instructions-ko](https://huggingface.co/datasets/cahya/instructions-ko) | 구분자 구분 |
+| 11 | [ko_hh-rlhf-20k_filtered](https://huggingface.co/datasets/maywell/ko_hh-rlhf-20k_filtered/viewer/default/train?p=1&row=100) | 데이터 모호 |
+| 12 | [hh-rlhf-ko](https://huggingface.co/datasets/heegyu/hh-rlhf-ko) | 데이터 모호 |
+| 13 | [ko_medical_chat](https://huggingface.co/datasets/squarelike/ko_medical_chat) | key-value |
 
 ## Step1 - 변경 타입 1)
 instruction, input, output으로 명확하게 column들이 주어져 있는 형식 : 이 형식의 경우 데이터의 column이 3개 이상이고 instruction, input, output의 형태가 아니더라도 유사한 column명이 주어지게 된다.
@@ -104,9 +145,9 @@ python [python 파일명] "input파일주소" [target column명] [첫번째 구�
 
 ```
 예외 경우
-1) json 파일이지만, jsonl 파일 형태로 작성되어있는 데이터 : json 파일을 읽어들일 때, lines=True를 기록해주어야 위 코드를 통해 데이터 가공이 가능
-2) "from" : "gpt", "from" : "bot"의 형태가 아닌, from 자리에 다른 문구가 속하는 경우 : from의 위치에 다른 문구를 기록해주어야 위 코드를 통해 데이터 가공이 가능
-3) 형식이 gpt, bot의 형태가 아닌 3~4개의 구분자가 나오게 되는 경우 : 코드를 변형시켜서, 해당 경우에 맞는 코드를 짜주는 것이 훨씬 효율적
+1) json 파일이지만, jsonl 파일 형태로 작성되어있는 데이터 : json 파일을 읽어들일 때, lines=True를 기록해주어야 위 코드를 통해 데이터 가공이 가능 - Data Type 2) 7
+2) column이 여러개로 사람이 직접 판단해서, 여러개의 column을 모두 데이터 처리해야하는 경우 - Data Type 2) 11, 12
+3) 형식이 gpt, bot의 형태가 아닌 3~4개의 구분자가 나오게 되는 경우 : 코드를 변형시켜서, 해당 경우에 맞는 코드를 짜주는 것이 훨씬 효율적 - Data Type 2) 10
 
 일반적으로 흔히 instruction dataset이 가지고 있는 형태를 코드로 쉽게 처리하기 위한 작업이므로, 예외의 경우에는 따로 추가적인 코드 수정처리가 필요하다.
 ```
@@ -156,13 +197,15 @@ lines=True를 생략하고, json의 올바른 파일 형식으로 뽑아낼 수�
 
 ```
 import json
-import nltk
-from nltk.tokenize import word_tokenize
+from transformers import AutoTokenizer
 
-nltk.download("punkt")
-
+# transformers의 AutoTokenizer를 사용
 def tokenize_text(text):
-    # 토큰 길이 return
+    if text is None:
+        return 0
+    MODEL = "42dot/42dot_LLM-SFT-1.3B"
+    tokenizer = AutoTokenizer.from_pretrained(MODEL)
+    return len(tokenizer.tokenize(text))
 
 def process_file(file_path):
     
@@ -174,30 +217,19 @@ def process_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             i = json.loads(line)
-        
-            instruction_tokens = tokenize_text(i['instruction'])
-            output_tokens = tokenize_text(i['output'])
-            input_tokens = tokenize_text(i['input'])
-            
-            total_instruction_tokens += instruction_tokens
-            total_output_tokens += output_tokens
-            total_input_tokens += input_tokens
-            
-            print(f"Instruction Tokens: {instruction_tokens}, Output Tokens: {output_tokens}, Input Tokens: {input_tokens}")
-    total_tokens = total_instruction_tokens + total_output_tokens + total_input_tokens
-    print(f"Total Instruction Tokens: {total_instruction_tokens}, Total Output Tokens: {total_output_tokens}, Total Input Tokens: {total_input_tokens}, Total Tokens: {total_tokens}")
+
+            # instruction, output, input을 각각의 리스트를 만들어 찾고, 누적시켜 total 토큰값을 뽑아준다.
 
 json_file_path = 'C:/Users/DEEPNOID/Desktop/instruction, output, input type/preprocessing file/Final_combine.json'
 process_file(json_file_path)
 
-nltk의 word_tokenize를 사용하여 tokenize를 단어를 기준으로 잘라주는 방식을 선택했다. 
 ```
 
-![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/9a59bef3-e06e-46ea-b815-54c9f8d9f9f8)
+
 
 ```
 수집했던 데이터셋 중에서 코드를 활용해서 쉽게 데이터를 처리할 수 있는 json 파일은 1.61GB 정도였다. 
-tokenize를 nltk의 word_tokenize를 사용하여 코드로 구현해서 뽑은 결과는 위와 같다.
+transformers의 AutoTokenizer를 사용하여 코드로 구현해서 뽑은 결과는 위와 같다.
 ```
 
 
