@@ -200,11 +200,12 @@ import json
 from transformers import AutoTokenizer
 
 # transformers의 AutoTokenizer를 사용
+MODEL = "42dot/42dot_LLM-SFT-1.3B"
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
+
 def tokenize_text(text):
     if text is None:
         return 0
-    MODEL = "42dot/42dot_LLM-SFT-1.3B"
-    tokenizer = AutoTokenizer.from_pretrained(MODEL)
     return len(tokenizer.tokenize(text))
 
 def process_file(file_path):
@@ -217,19 +218,21 @@ def process_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             i = json.loads(line)
-
+        
             # instruction, output, input을 각각의 리스트를 만들어 찾고, 누적시켜 total 토큰값을 뽑아준다.
+
+    print(f"Total Instruction Tokens: {total_instruction_tokens}, Total Output Tokens: {total_output_tokens}, Total Input Tokens: {total_input_tokens}, Total Tokens: {total_tokens}")
 
 json_file_path = 'C:/Users/DEEPNOID/Desktop/instruction, output, input type/preprocessing file/Final_combine.json'
 process_file(json_file_path)
-
 ```
 
+![image](https://github.com/LEE-hyeon0771/instruction_dataset/assets/84756586/382d2ca4-7135-406b-8f37-9f0856e8441e)
 
 
 ```
 수집했던 데이터셋 중에서 코드를 활용해서 쉽게 데이터를 처리할 수 있는 json 파일은 1.61GB 정도였다. 
-transformers의 AutoTokenizer를 사용하여 코드로 구현해서 뽑은 결과는 위와 같다.
+transformers의 AutoTokenizer를 사용하여 코드로 구현해서 뽑은 총 token 갯수 결과는 위와 같다.
 ```
 
 
