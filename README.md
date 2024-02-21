@@ -1,4 +1,4 @@
-## instruction_dataset 가공하기
+## instruction_dataset Tutorial
 
 ## 대상 데이터셋
 대상 데이터셋 : 한글 instruction dataset
